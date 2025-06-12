@@ -1,0 +1,15 @@
+<section>
+  <img
+    src="assets/providers/{{ vendorName() }}.svg"
+    alt="{{ vendorName() }} image"
+    loading="lazy"
+    decoding="async"
+  />
+
+  <div class="car-list">
+    @for(vendor of vendorAvailable().vehAvails; track index; let index =
+    $index;) {
+    <app-vendor-car [vehicle]="vendor.vehicle"></app-vendor-car>
+    }
+  </div>
+</section>

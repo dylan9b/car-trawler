@@ -1,0 +1,11 @@
+@defer { @for(vendorItem of carsSignal(); track vendorItem.vendor.code; let
+vendorIndex = $index;) {
+<app-vendor [vendorAvailable]="vendorItem"></app-vendor>
+
+} } @placeholder {
+<p>Preparing ...</p>
+} @loading {
+<p>Loading ...</p>
+} @error {
+<p>Error ...</p>
+}

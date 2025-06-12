@@ -1,0 +1,11 @@
+<div class="car-list__item">
+  <img
+    [src]="vehicle().pictureURL"
+    alt="{{ vehicle().vehMakeModel.name }} image"
+    loading="lazy"
+    decoding="async"
+    class="car-list__item__image"
+  />
+
+  <app-vendor-car-details [details]="detailsSignal()"></app-vendor-car-details>
+</div>
