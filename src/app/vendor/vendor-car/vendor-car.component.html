@@ -1,11 +1,22 @@
 <div class="car-list__item">
+  <!-- CAR IMAGE -->
   <img
-    [src]="vehicle().pictureURL"
-    alt="{{ vehicle().vehMakeModel.name }} image"
-    loading="lazy"
+    [src]="carDetails().vehicle.pictureURL"
+    alt="{{ carDetails().vehicle.vehMakeModel.name }} image"
     decoding="async"
     class="car-list__item__image"
   />
 
+  <p class="subtitle-s">{{ carDetails().vehicle.vehMakeModel.name }}</p>
+
+  <!-- CAR DETAILS -->
   <app-vendor-car-details [details]="detailsSignal()"></app-vendor-car-details>
+
+  <!-- CAR PROVIDER IMAGE -->
+  <img
+    src="assets/providers/{{ carDetails().vendor.name }}.svg"
+    alt="{{ carDetails().vendor.name }} logo"
+    decoding="async"
+    class="car-list__item__provider"
+  />
 </div>

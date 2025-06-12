@@ -1,5 +1,5 @@
+@for(detail of details(); track detailIndex; let detailIndex = $index;) {
 <div class="details">
-  @for(detail of details(); track detailIndex; let detailIndex = $index;) {
   <img
     src="assets/icons/{{ detail.icon }}.svg"
     alt="{{ detail.icon }} icon"
@@ -8,6 +8,6 @@
     width="16"
     height="16"
   />
-  <p class="body-s">{{ detail.value }}</p>
-  }
+  <p class="body-m">{{ detail.value }}</p>
 </div>
+}

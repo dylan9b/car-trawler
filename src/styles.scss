@@ -2,6 +2,13 @@
 @use "font" as *;
 
 body {
-  color: $jet;
   font-family: "Open Sans", sans-serif;
+  color: $jet;
+  background-color: $anti-flash-white;
+
+  padding: 3em;
+
+  @media screen and (max-width: 698px) {
+    padding: 0;
+  }
 }

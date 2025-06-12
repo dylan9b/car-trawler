@@ -3,16 +3,18 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  effect,
+  signal,
 } from '@angular/core';
 import { sanitizeKeys } from '../../services/api.util';
-import { CarModel } from '../_model/car.model';
-import { VendorComponent } from '../../vendor/vendor.component';
+import { CarModel, VehAvail, Vendor } from '../_model/car.model';
+import { VendorCarComponent } from '../../vendor/vendor-car/vendor-car.component';
+import { ButtonComponent } from '../../button/button.component';
 
 @Component({
   selector: 'app-car-list',
-  imports: [VendorComponent],
+  imports: [VendorCarComponent, ButtonComponent],
   templateUrl: './car-list.component.html',
+  styleUrls: ['./car-list.component.scss'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -23,46 +25,40 @@ export class CarListComponent {
     defaultValue: [],
   });
 
-  readonly carsSignal = computed(
-    () =>
-      this.carsResource
-        .value()
-        ?.map((car) => car?.vehAvailRSCore?.vehVendorAvails)[0]
-  );
+  readonly sortDirectionSignal = signal<'ASC' | 'DESC'>('ASC');
 
-  readonly carDetailsSignal = computed(() => {
-    const result = this.carsSignal()?.map((car) => {
-      return car.vehAvails?.map((detail) => {
-        return [
-          {
-            icon: 'fuel',
-            value: detail.vehicle.fuelType,
-          },
-          // {
-          //   icon: 'transmission',
-          //   value: detail.vehicle.transmissionType,
-          // },
-          // {
-          //   icon: 'person',
-          //   value: detail.vehicle.passengerQuantity,
-          // },
-          // {
-          //   icon: 'snow',
-          //   value: detail.vehicle.airConditionInd,
-          // },
-        ];
-      });
-    });
+  readonly carsSignal = computed(() => {
+    const data =
+      this.carsResource.value()?.flatMap((car) =>
+        car?.vehAvailRSCore.vehVendorAvails.flatMap((x) =>
+          x.vehAvails.map((v) => ({
+            ...v,
+            vendor: {
+              ...x.vendor,
+              name: x.vendor.name.toLocaleLowerCase(),
+            },
+          }))
+        )
+      ) ?? [];
 
-    return result;
+    return this.sort(data);
   });
 
-  /**
-   *
-   */
-  constructor() {
-    effect(() => {
-      console.log('this.carDetailsSignal()', this.carDetailsSignal());
+  private sort(
+    data: (VehAvail & { vendor: Vendor })[]
+  ): (VehAvail & { vendor: Vendor })[] {
+    const direction = this.sortDirectionSignal();
+    const multiplier = direction === 'ASC' ? 1 : -1;
+
+    // Use slice() to avoid in-place sort mutation
+    return data.slice().sort((a, b) => {
+      const priceA = +a.totalCharge.estimatedTotalAmount;
+      const priceB = +b.totalCharge.estimatedTotalAmount;
+      return (priceA - priceB) * multiplier;
     });
+  }
+
+  sortByPrice(): void {
+    this.sortDirectionSignal.update((dir) => (dir === 'ASC' ? 'DESC' : 'ASC'));
   }
 }

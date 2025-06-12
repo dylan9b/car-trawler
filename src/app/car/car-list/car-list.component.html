@@ -1,11 +1,20 @@
-@defer { @for(vendorItem of carsSignal(); track vendorItem.vendor.code; let
-vendorIndex = $index;) {
-<app-vendor [vendorAvailable]="vendorItem"></app-vendor>
+@defer{
+<app-button label="Sort By Price" (click)="sortByPrice()"></app-button>
+<section>
+  @for(car of carsSignal(); track carIndex; let carIndex = $index;) {
+  <app-vendor-car [carDetails]="car"></app-vendor-car>
 
-} } @placeholder {
-<p>Preparing ...</p>
+  }
+</section>
+} @placeholder (minimum 2s) {
+<div class="preparing">
+  @for (_ of [].constructor(10); track i; let i = $index) {
+  <div class="preparing__item"></div>
+  }
+</div>
 } @loading {
-<p>Loading ...</p>
+<p>loading ...</p>
+
 } @error {
 <p>Error ...</p>
 }

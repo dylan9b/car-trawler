@@ -4,7 +4,7 @@ import {
   computed,
   input,
 } from '@angular/core';
-import { Vehicle } from '../../car/_model/car.model';
+import { VehAvail, Vendor } from '../../car/_model/car.model';
 import { VendorCarDetailsComponent } from '../vendor-car-details/vendor-car-details.component';
 
 @Component({
@@ -16,13 +16,32 @@ import { VendorCarDetailsComponent } from '../vendor-car-details/vendor-car-deta
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VendorCarComponent {
-  readonly vehicle = input.required<Vehicle>();
-
+  readonly carDetails = input.required<VehAvail & { vendor: Vendor }>();
   readonly detailsSignal = computed(() => {
     return [
       {
+        icon: 'bag',
+        value: this.carDetails().vehicle.baggageQuantity,
+      },
+      {
+        icon: 'door',
+        value: this.carDetails().vehicle.doorCount,
+      },
+      {
         icon: 'fuel',
-        value: this.vehicle().fuelType,
+        value: this.carDetails().vehicle.fuelType,
+      },
+      {
+        icon: 'person',
+        value: this.carDetails().vehicle.passengerQuantity,
+      },
+      {
+        icon: 'snowflake',
+        value: this.carDetails().vehicle.airConditionInd,
+      },
+      {
+        icon: 'transmission',
+        value: this.carDetails().vehicle.transmissionType,
       },
     ];
   });
