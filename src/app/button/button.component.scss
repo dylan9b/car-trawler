@@ -1,0 +1,32 @@
+@use "colors" as *;
+
+button {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  height: 2.5em;
+  padding: 1em 0;
+  border: 1px solid $razzmatazz;
+  border-radius: 0.25em;
+  max-height: 2.5em;
+  min-height: 2.5em;
+  min-width: 10em;
+  justify-content: center;
+
+  &:disabled {
+    cursor: not-allowed;
+    color: $jet;
+    border-color: $french-gray;
+    background-color: $french-gray;
+  }
+
+  &.primary {
+    color: $white;
+    background-color: $razzmatazz;
+  }
+
+  &.secondary {
+    color: $razzmatazz;
+    background-color: $white;
+  }
+}

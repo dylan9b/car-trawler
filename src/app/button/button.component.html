@@ -1,0 +1,7 @@
+<button
+  [disabled]="disabled()"
+  [type]="type()"
+  [ngClass]="disabled() ? 'disabled' : variant()"
+>
+  {{ label() }}
+</button>
