@@ -13,6 +13,7 @@ button {
   min-width: 10em;
   justify-content: center;
   font-family: inherit;
+  font-weight: 600;
 
   &:disabled {
     cursor: not-allowed;
