@@ -37,7 +37,7 @@ export class VendorCarComponent {
       },
       {
         icon: 'snowflake',
-        value: this.carDetails().vehicle.airConditionInd,
+        value: this.carDetails().vehicle.airConditionInd ? 'Yes' : 'No',
       },
       {
         icon: 'transmission',

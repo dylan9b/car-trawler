@@ -1,0 +1,22 @@
+<div class="container">
+  <app-vendor-car [carDetails]="car"></app-vendor-car>
+
+  <div class="container__btn">
+    <h2 class="title-l">Ready to Drive?</h2>
+    <p class="subtitle-m">
+      Starting from
+      <span>
+        {{ car.totalCharge.currencyCode }}
+        {{ car.totalCharge.estimatedTotalAmount }}
+      </span>
+    </p>
+    <div>
+      <app-button label="Let's go!"></app-button>
+
+      <app-button
+        label="Request more information"
+        variant="secondary"
+      ></app-button>
+    </div>
+  </div>
+</div>

@@ -9,10 +9,11 @@ import { sanitizeKeys } from '../../services/api.util';
 import { CarModel, VehAvail, Vendor } from '../_model/car.model';
 import { VendorCarComponent } from '../../vendor/vendor-car/vendor-car.component';
 import { ButtonComponent } from '../../button/button.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-car-list',
-  imports: [VendorCarComponent, ButtonComponent],
+  imports: [VendorCarComponent, ButtonComponent, RouterLink],
   templateUrl: './car-list.component.html',
   styleUrls: ['./car-list.component.scss'],
   standalone: true,
@@ -26,6 +27,10 @@ export class CarListComponent {
   });
 
   readonly sortDirectionSignal = signal<'ASC' | 'DESC'>('ASC');
+
+  readonly sortDirectionImageSignal = computed(() =>
+    this.sortDirectionSignal() === 'ASC' ? 'angle-up' : 'angle-down'
+  );
 
   readonly carsSignal = computed(() => {
     const data =

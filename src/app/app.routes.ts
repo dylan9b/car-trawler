@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { CarResolver } from './resolvers/car.resolver';
 
 export const routes: Routes = [
   {
@@ -8,9 +9,23 @@ export const routes: Routes = [
         (c) => c.CarListComponent
       ),
   },
-
+  {
+    path: 'cars/:vendorName/:carCode',
+    loadComponent: () =>
+      import('./car/car-item/car-item.component').then(
+        (c) => c.CarItemComponent
+      ),
+    resolve: {
+      carResolver: CarResolver,
+    },
+  },
   {
     path: '',
+    redirectTo: 'cars',
+    pathMatch: 'full',
+  },
+  {
+    path: '**',
     redirectTo: 'cars',
     pathMatch: 'full',
   },

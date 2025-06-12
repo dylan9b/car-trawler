@@ -1,11 +1,25 @@
 @defer{
-<app-button label="Sort By Price" (click)="sortByPrice()"></app-button>
-<section>
-  @for(car of carsSignal(); track carIndex; let carIndex = $index;) {
-  <app-vendor-car [carDetails]="car"></app-vendor-car>
+<div class="container">
+  <div>
+    <app-button label="Sort By Price" (click)="sortByPrice()"></app-button>
+    <img
+      src="assets/icons/{{ sortDirectionImageSignal() }}.svg"
+      alt="{{ sortDirectionSignal() }} icon"
+      decoding="async"
+    />
+  </div>
 
-  }
-</section>
+  <section>
+    @for(car of carsSignal(); track carIndex; let carIndex = $index;) {
+    <div>
+      <app-vendor-car [carDetails]="car"></app-vendor-car>
+      <a [routerLink]="['/cars', car.vendor.name, car.vehicle.code]">
+        <app-button class="view-more-btn" label="Check it out"></app-button>
+      </a>
+    </div>
+    }
+  </section>
+</div>
 } @placeholder (minimum 2s) {
 <div class="preparing">
   @for (_ of [].constructor(10); track i; let i = $index) {

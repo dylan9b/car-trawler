@@ -1,0 +1,57 @@
+@use "colors" as *;
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4em;
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+
+  @media screen and (min-width: 1400px) {
+    grid-template-columns: repeat(4, 1fr);
+    app-vendor-car {
+      grid-column-start: 2;
+    }
+  }
+
+  h2 {
+    margin: 0;
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+
+    border: 1px solid $french-gray;
+    background-color: $white;
+    border-radius: 2em;
+    padding: 1em;
+
+    .subtitle-m {
+      span {
+        font-weight: 800;
+      }
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+      gap: 2em;
+      width: 80%;
+
+      app-button {
+        width: 100%;
+
+        ::ng-deep {
+          button {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
