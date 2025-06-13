@@ -36,9 +36,16 @@ To build the project and run it locally on a server:
 
 ```bash
 npm install (install all the required packages)
-npm run build
-npm run serve (then navigate to localhost specified in terminal)
+npm run build (2)
+npm run serve (3) (then navigate to localhost specified in terminal)
 ```
+(2) After running npm run build
+![image](https://github.com/user-attachments/assets/a55235c7-2f95-4f65-9884-345a218f31f3)
+
+(3) After running npm run serve
+![image](https://github.com/user-attachments/assets/6898d6c4-a5d5-4520-9903-ea0d11f58448)
+![image](https://github.com/user-attachments/assets/f75ebed4-0e95-4f3d-b500-6383071f3445)
+
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
