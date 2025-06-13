@@ -6,18 +6,18 @@ export const routes: Routes = [
     path: 'cars',
     loadComponent: () =>
       import('./car/car-list/car-list.component').then(
-        (c) => c.CarListComponent
+        (c) => c.CarListComponent,
       ),
     resolve: {
       carResolver: CarResolver,
     },
-    runGuardsAndResolvers: 'always', // or 'always'
+    runGuardsAndResolvers: 'always',
   },
   {
     path: 'cars/:vendorName/:carCode',
     loadComponent: () =>
       import('./car/car-item/car-item.component').then(
-        (c) => c.CarItemComponent
+        (c) => c.CarItemComponent,
       ),
     resolve: {
       carResolver: CarResolver,

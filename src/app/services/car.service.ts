@@ -1,4 +1,4 @@
-import { computed, effect, inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { catchError, EMPTY, map, Observable } from 'rxjs';
 import {
   CarModel,
@@ -22,19 +22,19 @@ export class CarService {
   getDates$(): Observable<VehRentalCore> {
     return this._httpClient.get<CarModel>(this.apiEndpoint).pipe(
       map((data) => {
-        data = sanitizeKeys(data);
+        data = sanitizeKeys(data) as CarModel;
 
         return data[0].vehAvailRSCore.vehRentalCore;
-      })
+      }),
     );
   }
 
   getCars$(
-    filter: CarFilterModel
+    filter: CarFilterModel,
   ): Observable<(VehAvail & { vendor: Vendor })[]> {
     return this._httpClient.get<CarModel>(this.apiEndpoint).pipe(
       map((data) => {
-        data = sanitizeKeys(data);
+        data = sanitizeKeys(data) as CarModel;
 
         let result =
           data?.flatMap((car) =>
@@ -45,8 +45,8 @@ export class CarService {
                   ...x.vendor,
                   name: x.vendor.name.toLocaleLowerCase(),
                 },
-              }))
-            )
+              })),
+            ),
           ) ?? [];
 
         // Filter to retrieve specific car.
@@ -55,20 +55,20 @@ export class CarService {
           const found = result.find(
             (item) =>
               item.vendor.name === filter.vendorName &&
-              item.vehicle.code === filter.carCode
+              item.vehicle.code === filter.carCode,
           );
           result = found ? [found] : [];
         }
 
         return this.sort(filter?.sortPrice, result);
       }),
-      catchError(() => EMPTY)
+      catchError(() => EMPTY),
     );
   }
 
   private sort(
     sortPrice: 'ASC' | 'DESC',
-    data: (VehAvail & { vendor: Vendor })[]
+    data: (VehAvail & { vendor: Vendor })[],
   ): (VehAvail & { vendor: Vendor })[] {
     const direction = sortPrice ?? 'ASC';
     const multiplier = direction === 'ASC' ? 1 : -1;

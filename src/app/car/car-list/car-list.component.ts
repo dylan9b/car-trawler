@@ -28,7 +28,7 @@ export class CarListComponent {
   private readonly _destroyRef = inject(DestroyRef);
 
   readonly carsSignal = toSignal(
-    this._route.data.pipe(map((data) => data['carResolver']))
+    this._route.data.pipe(map((data) => data['carResolver'])),
   );
 
   readonly sortDirectionSignal = this._carService.sortDirectionSignal;
@@ -49,20 +49,20 @@ export class CarListComponent {
         map((params) => {
           return params.get('sortPrice');
         }),
-        takeUntilDestroyed(this._destroyRef)
+        takeUntilDestroyed(this._destroyRef),
       )
       .subscribe((sortDir: string | null) => {
         this._carService.sortDirectionSignal.update(() =>
           sortDir === 'ASC' || sortDir === 'DESC'
             ? (sortDir as 'ASC' | 'DESC')
-            : 'ASC'
+            : 'ASC',
         );
       });
   }
 
   sortByPrice(): void {
     this._carService.sortDirectionSignal.update((dir) =>
-      dir === 'ASC' ? 'DESC' : 'ASC'
+      dir === 'ASC' ? 'DESC' : 'ASC',
     );
 
     this._router.navigate([], {

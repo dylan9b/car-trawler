@@ -25,8 +25,8 @@ export class PlatformService {
     return toSignal(
       fromEvent(window, 'resize').pipe(
         startWith(null),
-        map(() => window.innerWidth <= 992)
-      )
+        map(() => window.innerWidth <= 992),
+      ),
     );
   }
 }

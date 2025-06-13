@@ -13,7 +13,7 @@
     <div class="pickup">
       <h2 class="title-s">PickUp</h2>
       <h3 [ngClass]="isMobileSignal() ? 'body-s' : 'subtitle-s'">
-        {{ dateDetailsSignal()?.pickUpDateTime | date : "short" }}
+        {{ dateDetailsSignal()?.pickUpDateTime | date: "short" }}
         <span>
           {{ dateDetailsSignal()?.pickUpLocation?.name }}
         </span>
@@ -23,7 +23,7 @@
     <div class="return">
       <h2 class="title-s">Return</h2>
       <h3 [ngClass]="isMobileSignal() ? 'body-s' : 'subtitle-s'">
-        {{ dateDetailsSignal()?.returnDateTime | date : "short" }}
+        {{ dateDetailsSignal()?.returnDateTime | date: "short" }}
         <span>
           {{ dateDetailsSignal()?.returnLocation?.name }}
         </span>

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
-import { map, Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { VehAvail, Vendor } from '../car/_model/car.model';
 import { CarFilterModel } from '../car/_model/car-filter.model';
 import { CarService } from '../services/car.service';
@@ -10,7 +10,7 @@ export class CarResolver implements Resolve<(VehAvail & { vendor: Vendor })[]> {
   private readonly _carService = inject(CarService);
 
   resolve(
-    route: ActivatedRouteSnapshot
+    route: ActivatedRouteSnapshot,
   ): Observable<(VehAvail & { vendor: Vendor })[]> {
     let filter: CarFilterModel = {} as CarFilterModel;
 

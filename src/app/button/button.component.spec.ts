@@ -10,10 +10,12 @@ describe('ButtonComponent', () => {
 
   // Helper to override inputs as signals manually
   function setInputsManually(
-    inputs: Partial<Record<keyof ButtonComponent, any>>
+    inputs: Partial<Record<keyof ButtonComponent, unknown>>
   ) {
     for (const [key, value] of Object.entries(inputs)) {
-      (component as any)[key] = signal(value);
+      (component as Record<keyof ButtonComponent, unknown>)[
+        key as keyof ButtonComponent
+      ] = signal(value);
     }
     fixture.detectChanges();
   }

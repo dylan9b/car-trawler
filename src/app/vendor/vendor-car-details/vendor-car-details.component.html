@@ -1,13 +1,13 @@
-@for(detail of details(); track detailIndex; let detailIndex = $index;) {
-<div class="details">
-  <img
-    src="assets/icons/{{ detail.icon }}.svg"
-    alt="{{ detail.icon }} icon"
-    loading="lazy"
-    decoding="async"
-    width="16"
-    height="16"
-  />
-  <p class="body-m">{{ detail.value }}</p>
-</div>
+@for (detail of details(); track detailIndex; let detailIndex = $index) {
+  <div class="details">
+    <img
+      src="assets/icons/{{ detail.icon }}.svg"
+      alt="{{ detail.icon }} icon"
+      loading="lazy"
+      decoding="async"
+      width="16"
+      height="16"
+    />
+    <p class="body-m">{{ detail.value }}</p>
+  </div>
 }
