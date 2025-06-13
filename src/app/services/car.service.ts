@@ -15,12 +15,13 @@ import { sanitizeKeys } from './api.util';
 })
 export class CarService {
   private readonly _httpClient = inject(HttpClient);
-  readonly apiEndpoint = 'https://ajaxgeo.cartrawler.com/ctabe/cars.json';
+  private readonly _apiEndpoint =
+    'https://ajaxgeo.cartrawler.com/ctabe/cars.json';
 
   readonly sortDirectionSignal = signal<'ASC' | 'DESC'>('ASC');
 
   getDates$(): Observable<VehRentalCore> {
-    return this._httpClient.get<CarModel>(this.apiEndpoint).pipe(
+    return this._httpClient.get<CarModel>(this._apiEndpoint).pipe(
       map((data) => {
         data = sanitizeKeys(data) as CarModel;
 
@@ -30,9 +31,9 @@ export class CarService {
   }
 
   getCars$(
-    filter: CarFilterModel,
+    filter?: Partial<CarFilterModel>,
   ): Observable<(VehAvail & { vendor: Vendor })[]> {
-    return this._httpClient.get<CarModel>(this.apiEndpoint).pipe(
+    return this._httpClient.get<CarModel>(this._apiEndpoint).pipe(
       map((data) => {
         data = sanitizeKeys(data) as CarModel;
 
@@ -60,15 +61,15 @@ export class CarService {
           result = found ? [found] : [];
         }
 
-        return this.sort(filter?.sortPrice, result);
+        return this.sort(result, filter?.sortPrice);
       }),
       catchError(() => EMPTY),
     );
   }
 
   private sort(
-    sortPrice: 'ASC' | 'DESC',
     data: (VehAvail & { vendor: Vendor })[],
+    sortPrice?: 'ASC' | 'DESC',
   ): (VehAvail & { vendor: Vendor })[] {
     const direction = sortPrice ?? 'ASC';
     const multiplier = direction === 'ASC' ? 1 : -1;

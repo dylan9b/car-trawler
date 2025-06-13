@@ -12,6 +12,4 @@ import { PlatformService } from './services/platform.service';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class App {
-  protected title = 'car-trawler';
-}
+export class App {}
