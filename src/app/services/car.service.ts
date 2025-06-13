@@ -1,6 +1,11 @@
 import { inject, Injectable } from '@angular/core';
-import { catchError, EMPTY, map, Observable, tap } from 'rxjs';
-import { CarModel, VehAvail, Vendor } from '../car/_model/car.model';
+import { catchError, EMPTY, map, Observable } from 'rxjs';
+import {
+  CarModel,
+  VehAvail,
+  VehRentalCore,
+  Vendor,
+} from '../car/_model/car.model';
 import { HttpClient } from '@angular/common/http';
 import { CarFilterModel } from '../car/_model/car-filter.model';
 import { sanitizeKeys } from './api.util';
@@ -12,12 +17,23 @@ export class CarService {
   private readonly _httpClient = inject(HttpClient);
   readonly apiEndpoint = 'https://ajaxgeo.cartrawler.com/ctabe/cars.json';
 
-  getData$(
+  getDates$(): Observable<VehRentalCore> {
+    return this._httpClient.get<CarModel>(this.apiEndpoint).pipe(
+      map((data) => {
+        data = sanitizeKeys(data);
+
+        return data[0].vehAvailRSCore.vehRentalCore;
+      })
+    );
+  }
+
+  getCars$(
     filter: CarFilterModel
   ): Observable<(VehAvail & { vendor: Vendor })[]> {
     return this._httpClient.get<CarModel>(this.apiEndpoint).pipe(
       map((data) => {
         data = sanitizeKeys(data);
+
         let result =
           data?.flatMap((car) =>
             car?.vehAvailRSCore?.vehVendorAvails.flatMap((x) =>

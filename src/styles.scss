@@ -9,6 +9,7 @@ body {
   padding: 3em;
 
   @media screen and (max-width: 698px) {
-    padding: 0;
+    padding-left: 0;
+    padding-right: 0;
   }
 }

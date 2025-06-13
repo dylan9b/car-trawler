@@ -1,0 +1,33 @@
+<section>
+  <picture>
+    <img
+      src="assets/icons/plane.svg"
+      alt="Plane icon"
+      decoding="async"
+      loading="lazy"
+      width="16"
+      height:16
+    />
+  </picture>
+  <div class="legend__text">
+    <div class="pickup">
+      <h2 class="title-s">PickUp</h2>
+      <h3 class="subtitle-s">
+        {{ dateDetailsSignal()?.pickUpDateTime | date : "short" }}
+        <span>
+          {{ dateDetailsSignal()?.pickUpLocation?.name }}
+        </span>
+      </h3>
+    </div>
+
+    <div class="return">
+      <h2 class="title-s">Return</h2>
+      <h3 class="subtitle-s">
+        {{ dateDetailsSignal()?.returnDateTime | date : "short" }}
+        <span>
+          {{ dateDetailsSignal()?.returnLocation?.name }}
+        </span>
+      </h3>
+    </div>
+  </div>
+</section>

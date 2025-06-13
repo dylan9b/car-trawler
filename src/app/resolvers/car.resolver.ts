@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { VehAvail, Vendor } from '../car/_model/car.model';
 import { CarFilterModel } from '../car/_model/car-filter.model';
 import { CarService } from '../services/car.service';
@@ -29,6 +29,6 @@ export class CarResolver implements Resolve<(VehAvail & { vendor: Vendor })[]> {
       };
     }
 
-    return this._carService.getData$(filter);
+    return this._carService.getCars$(filter);
   }
 }

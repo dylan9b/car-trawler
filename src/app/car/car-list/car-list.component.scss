@@ -58,3 +58,20 @@
     border-radius: 2em;
   }
 }
+
+app-legend {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: 1fr;
+
+  @media screen and (min-width: 1200px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}

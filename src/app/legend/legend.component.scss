@@ -1,0 +1,73 @@
+@use "colors" as *;
+
+section {
+  background-color: $white;
+  border-radius: 2em;
+  padding: 2em;
+  border: 1px solid $razzmatazz;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  grid-column-start: 2;
+  gap: 1em;
+
+  @media screen and (min-width: 1200px) {
+    grid-column: 2 / span 2;
+  }
+
+  grid-column: 1 / span 1;
+
+  picture {
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    display: flex;
+    padding: 1em;
+    img {
+      flex: 1;
+    }
+  }
+
+  .legend {
+    &__text {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      flex: 20;
+    }
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+
+    &.pickup {
+      flex: 1;
+      border-right: 1px solid $french-gray;
+    }
+
+    &.return {
+      flex: 1;
+    }
+
+    h2 {
+      margin: 0;
+      font-weight: 600;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1em;
+    }
+    h3 {
+      margin: 0;
+      font-weight: 400;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1em;
+    }
+  }
+}

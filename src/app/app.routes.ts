@@ -8,6 +8,9 @@ export const routes: Routes = [
       import('./car/car-list/car-list.component').then(
         (c) => c.CarListComponent
       ),
+    resolve: {
+      carResolver: CarResolver,
+    },
   },
   {
     path: 'cars/:vendorName/:carCode',
