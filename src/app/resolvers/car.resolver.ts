@@ -17,8 +17,11 @@ export class CarResolver implements Resolve<(VehAvail & { vendor: Vendor })[]> {
     const vendorName = route.paramMap.get('vendorName');
     const carCode = route.paramMap.get('carCode');
 
+    const queryParams = route.queryParams;
+
     filter = {
       ...filter,
+      ...queryParams,
     };
 
     if (vendorName && carCode) {

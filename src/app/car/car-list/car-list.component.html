@@ -1,21 +1,25 @@
-@defer{
+@defer (on timer(500ms)){
 <main>
   <app-legend></app-legend>
 
   <div class="container">
-    <!-- <div>
+    <div>
+      <span>
         <app-button label="Sort By Price" (click)="sortByPrice()"></app-button>
         <img
-        src="assets/icons/{{ sortDirectionImageSignal() }}.svg"
-        alt="{{ sortDirectionSignal() }} icon"
-        decoding="async"
+          src="assets/icons/{{ sortDirectionImageSignal() }}.svg"
+          alt="{{ sortDirectionSignal() }} icon"
+          decoding="async"
+          (click)="sortByPrice()"
         />
-      </div> -->
+      </span>
+    </div>
 
     <section>
-      @for(car of cars; track carIndex; let carIndex = $index;) {
+      @for(car of carsSignal(); track carIndex; let carIndex = $index;) {
       <div>
         <app-vendor-car [carDetails]="car"></app-vendor-car>
+
         <a [routerLink]="['/cars', car.vendor.name, car.vehicle.code]">
           <app-button class="view-more-btn" label="Check it out"></app-button>
         </a>
@@ -24,7 +28,7 @@
     </section>
   </div>
 </main>
-} @placeholder (minimum 500ms) {
+} @placeholder {
 <div class="preparing">
   @for (_ of [].constructor(10); track i; let i = $index) {
   <div class="preparing__item"></div>

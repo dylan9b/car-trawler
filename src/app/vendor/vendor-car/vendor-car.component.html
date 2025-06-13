@@ -12,6 +12,13 @@
   <!-- CAR DETAILS -->
   <app-vendor-car-details [details]="detailsSignal()"></app-vendor-car-details>
 
+  <div class="car-list__item__small">
+    <small class="body-s"
+      >{{ carDetails().totalCharge.currencyCode }}
+      {{ carDetails().totalCharge.rateTotalAmount }}</small
+    >
+  </div>
+
   <!-- CAR PROVIDER IMAGE -->
   <img
     src="assets/providers/{{ carDetails().vendor.name }}.svg"

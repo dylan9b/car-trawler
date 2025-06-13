@@ -11,6 +11,7 @@ export const routes: Routes = [
     resolve: {
       carResolver: CarResolver,
     },
+    runGuardsAndResolvers: 'always', // or 'always'
   },
   {
     path: 'cars/:vendorName/:carCode',

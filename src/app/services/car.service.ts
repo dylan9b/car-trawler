@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { catchError, EMPTY, map, Observable } from 'rxjs';
 import {
   CarModel,
@@ -16,6 +16,8 @@ import { sanitizeKeys } from './api.util';
 export class CarService {
   private readonly _httpClient = inject(HttpClient);
   readonly apiEndpoint = 'https://ajaxgeo.cartrawler.com/ctabe/cars.json';
+
+  readonly sortDirectionSignal = signal<'ASC' | 'DESC'>('ASC');
 
   getDates$(): Observable<VehRentalCore> {
     return this._httpClient.get<CarModel>(this.apiEndpoint).pipe(
@@ -58,9 +60,24 @@ export class CarService {
           result = found ? [found] : [];
         }
 
-        return result;
+        return this.sort(filter?.sortPrice, result);
       }),
       catchError(() => EMPTY)
     );
+  }
+
+  private sort(
+    sortPrice: 'ASC' | 'DESC',
+    data: (VehAvail & { vendor: Vendor })[]
+  ): (VehAvail & { vendor: Vendor })[] {
+    const direction = sortPrice ?? 'ASC';
+    const multiplier = direction === 'ASC' ? 1 : -1;
+
+    // Use slice() to avoid in-place sort mutation
+    return data.slice().sort((a, b) => {
+      const priceA = +a.totalCharge.estimatedTotalAmount;
+      const priceB = +b.totalCharge.estimatedTotalAmount;
+      return (priceA - priceB) * multiplier;
+    });
   }
 }

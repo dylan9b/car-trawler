@@ -1,5 +1,7 @@
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID, Signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { fromEvent, startWith, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,5 +19,14 @@ export class PlatformService {
 
   get localStorage(): Storage | null {
     return this.isBrowser ? localStorage : null;
+  }
+
+  get isMobileSignal(): Signal<boolean | undefined> {
+    return toSignal(
+      fromEvent(window, 'resize').pipe(
+        startWith(null),
+        map(() => window.innerWidth <= 992)
+      )
+    );
   }
 }

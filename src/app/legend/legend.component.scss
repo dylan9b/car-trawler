@@ -10,6 +10,7 @@ section {
   justify-content: flex-end;
   grid-column-start: 2;
   gap: 1em;
+  flex-direction: column;
 
   @media screen and (min-width: 1200px) {
     grid-column: 2 / span 2;
@@ -21,7 +22,7 @@ section {
     width: 2em;
     height: 2em;
     border-radius: 50%;
-    background-color: #f0f0f0;
+    background-color: $anti-flash-white;
     display: flex;
     padding: 1em;
     img {
@@ -34,7 +35,7 @@ section {
       display: flex;
       flex-direction: row;
       justify-content: flex-end;
-      flex: 20;
+      width: 100%;
     }
   }
 
@@ -45,8 +46,9 @@ section {
     gap: 1em;
 
     &.pickup {
-      flex: 1;
       border-right: 1px solid $french-gray;
+      margin-right: -1em;
+      flex: 1;
     }
 
     &.return {

@@ -1,9 +1,17 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { VehAvail, Vendor } from '../_model/car.model';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  DestroyRef,
+  inject,
+} from '@angular/core';
 import { VendorCarComponent } from '../../vendor/vendor-car/vendor-car.component';
 import { ButtonComponent } from '../../button/button.component';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LegendComponent } from '../../legend/legend.component';
+import { CarService } from '../../services/car.service';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-car-list',
@@ -14,53 +22,55 @@ import { LegendComponent } from '../../legend/legend.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CarListComponent {
-  readonly cars: (VehAvail & { vendor: Vendor })[] =
-    inject(ActivatedRoute).snapshot.data['carResolver'];
+  private readonly _carService = inject(CarService);
+  private readonly _router = inject(Router);
+  private readonly _route = inject(ActivatedRoute);
+  private readonly _destroyRef = inject(DestroyRef);
 
-  //   readonly apiEndpoint = 'https://ajaxgeo.cartrawler.com/ctabe/cars.json';
-  //   readonly carsResource = httpResource<CarModel>(() => this.apiEndpoint, {
-  //     parse: sanitizeKeys,
-  //     defaultValue: [],
-  //   });
+  readonly carsSignal = toSignal(
+    this._route.data.pipe(map((data) => data['carResolver']))
+  );
 
-  //   readonly sortDirectionSignal = signal<'ASC' | 'DESC'>('ASC');
+  readonly sortDirectionSignal = this._carService.sortDirectionSignal;
 
-  //   readonly sortDirectionImageSignal = computed(() =>
-  //     this.sortDirectionSignal() === 'ASC' ? 'angle-up' : 'angle-down'
-  //   );
+  readonly sortDirectionImageSignal = computed(() => {
+    return this.sortDirectionSignal() === 'ASC'
+      ? 'angle-up-white'
+      : 'angle-down-white';
+  });
 
-  //   readonly carsSignal = computed(() => {
-  //     const data =
-  //       this.carsResource.value()?.flatMap((car) =>
-  //         car?.vehAvailRSCore.vehVendorAvails.flatMap((x) =>
-  //           x.vehAvails.map((v) => ({
-  //             ...v,
-  //             vendor: {
-  //               ...x.vendor,
-  //               name: x.vendor.name.toLocaleLowerCase(),
-  //             },
-  //           }))
-  //         )
-  //       ) ?? [];
+  constructor() {
+    this.subscribeRouteParams();
+  }
 
-  //     return this.sort(data);
-  //   });
+  private subscribeRouteParams(): void {
+    this._route.queryParamMap
+      .pipe(
+        map((params) => {
+          return params.get('sortPrice');
+        }),
+        takeUntilDestroyed(this._destroyRef)
+      )
+      .subscribe((sortDir: string | null) => {
+        this._carService.sortDirectionSignal.update(() =>
+          sortDir === 'ASC' || sortDir === 'DESC'
+            ? (sortDir as 'ASC' | 'DESC')
+            : 'ASC'
+        );
+      });
+  }
 
-  //   private sort(
-  //     data: (VehAvail & { vendor: Vendor })[]
-  //   ): (VehAvail & { vendor: Vendor })[] {
-  //     const direction = this.sortDirectionSignal();
-  //     const multiplier = direction === 'ASC' ? 1 : -1;
+  sortByPrice(): void {
+    this._carService.sortDirectionSignal.update((dir) =>
+      dir === 'ASC' ? 'DESC' : 'ASC'
+    );
 
-  //     // Use slice() to avoid in-place sort mutation
-  //     return data.slice().sort((a, b) => {
-  //       const priceA = +a.totalCharge.estimatedTotalAmount;
-  //       const priceB = +b.totalCharge.estimatedTotalAmount;
-  //       return (priceA - priceB) * multiplier;
-  //     });
-  //   }
-
-  //   sortByPrice(): void {
-  //     this.sortDirectionSignal.update((dir) => (dir === 'ASC' ? 'DESC' : 'ASC'));
-  //   }
+    this._router.navigate([], {
+      relativeTo: this._route,
+      queryParams: {
+        sortPrice: this._carService.sortDirectionSignal(),
+      },
+      queryParamsHandling: 'merge',
+    });
+  }
 }
