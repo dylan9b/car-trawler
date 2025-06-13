@@ -32,10 +32,12 @@ ng generate --help
 
 ## Building
 
-To build the project run:
+To build the project and run it locally on a server:
 
 ```bash
-ng build
+npm install (install all the required packages)
+npm run build
+npm run serve (then navigate to localhost specified in terminal)
 ```
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
