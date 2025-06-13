@@ -1,4 +1,4 @@
-@defer (on timer(500ms)) {
+@defer (when carsSignal()) {
   <main>
     <app-legend></app-legend>
 
@@ -36,7 +36,7 @@
       </section>
     </div>
   </main>
-} @placeholder {
+} @placeholder (minimum 1s) {
   <div class="preparing">
     @for (_ of [].constructor(10); track i; let i = $index) {
       <div class="preparing__item"></div>

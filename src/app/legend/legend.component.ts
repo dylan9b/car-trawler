@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CarService } from '../services/car.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DatePipe, NgClass } from '@angular/common';
-import { PlatformService } from '../services/platform.service';
+import { LayoutService } from '../services/layout.service';
 
 @Component({
   selector: 'app-legend',
@@ -14,9 +14,9 @@ import { PlatformService } from '../services/platform.service';
 })
 export class LegendComponent {
   private readonly _carService = inject(CarService);
-  private readonly _platformService = inject(PlatformService);
+  private readonly _layoutService = inject(LayoutService);
 
-  readonly isMobileSignal = this._platformService.isMobileSignal;
+  readonly isMobileSignal = this._layoutService.isMobileSignal;
 
   readonly dateDetailsSignal = toSignal(this._carService.getDates$());
 }
