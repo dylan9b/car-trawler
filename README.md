@@ -9,6 +9,10 @@ To start a local development server, run:
 ```bash
 ng serve
 ```
+![localhost_4200_cars](https://github.com/user-attachments/assets/f8e685c6-d6de-4fe9-8e5c-8066f103791c)
+![localhost_4200_cars_hertz_CDAR](https://github.com/user-attachments/assets/bee68e9c-e423-4b9b-b423-72754f85e2ba)
+
+
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
@@ -43,6 +47,7 @@ To execute unit tests with the [Karma](https://karma-runner.github.io) test runn
 ```bash
 ng test
 ```
+![image](https://github.com/user-attachments/assets/d7448e82-a681-4606-8dc5-b30b3130174a)
 
 ## Running end-to-end tests
 
