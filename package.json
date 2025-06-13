@@ -4,11 +4,13 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --configuration production --base-href /",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:car-trawler": "node dist/car-trawler/server/server.mjs",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "preserve": "cp dist/car-trawler/browser/index.csr.html dist/car-trawler/browser/index.html",
+    "serve": "serve -s dist/car-trawler/browser"
   },
   "private": true,
   "dependencies": {
@@ -40,6 +42,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "prettier": "^3.5.3",
+    "serve": "^14.2.4",
     "typescript": "~5.8.2",
     "typescript-eslint": "8.33.1"
   }

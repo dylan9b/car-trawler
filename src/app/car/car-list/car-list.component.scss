@@ -1,4 +1,6 @@
 @use "colors" as *;
+@use "sass:color";
+@use "animation" as *;
 
 .container {
   display: flex;
@@ -78,10 +80,12 @@
   gap: 1em;
   margin-top: 4em;
   &__item {
-    background-color: $white;
+    background-color: $french-gray;
     border: 1px solid $french-gray;
     height: 22em;
     border-radius: 2em;
+
+    animation: pulsate 2.5s ease-in-out infinite;
   }
 }
 
