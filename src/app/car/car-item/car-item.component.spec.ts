@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CarItemComponent } from './car-item.component';
 import { ActivatedRoute } from '@angular/router';
 import { provideZonelessChangeDetection, signal } from '@angular/core';
-import { PlatformService } from '../../services/platform.service';
 import { VehAvail, Vendor } from '../_model/car.model';
+import { LayoutService } from '../../services/layout.service';
 
 describe('CarItemComponent', () => {
   let component: CarItemComponent;
@@ -30,7 +30,7 @@ describe('CarItemComponent', () => {
           },
         },
         {
-          provide: PlatformService,
+          provide: LayoutService,
           useValue: {
             isMobileSignal: signal(false),
           },
@@ -51,7 +51,7 @@ describe('CarItemComponent', () => {
     expect(component.car).toEqual(mockCar);
   });
 
-  it('should set isMobileSignal from PlatformService', () => {
+  it('should set isMobileSignal from LayoutService', () => {
     expect(component.isMobileSignal()).toBeFalse();
   });
 });
